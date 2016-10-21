@@ -14,14 +14,13 @@ public class Searcher
 {
 	private String searchString;
 	private SearchStrategy strategy;
-	boolean promptUser;
 	private boolean foundValidSearchString;
 	private boolean foundValidSearchMethod;
 
 	public static void main(String[] args)
 	{
 		Searcher searcher = new Searcher();
-		while (searcher.promptUser)
+		while (true)
 		{
 		searcher.getUserInput();
 		searcher.processUserInput();
@@ -33,7 +32,6 @@ public class Searcher
 	{
 		foundValidSearchString = false;
 		foundValidSearchMethod = false;
-		promptUser = true;
 		searchString = "";
 		strategy = new NotAStrategy();
 	}
@@ -46,14 +44,17 @@ public class Searcher
 
 	private void promptUserForSearchString()
 	{
-		while(promptForSearchString()){
+		while(notFoundSearchString()){
 		System.out.println("Enter string to search for, enclose in \"'s.  Enter Q\\q with no quotes to quit.");
 		readSearchStringFromCommandLine();
 		checkForQuiting(searchString);
-		if ( promptUser){
-			checkForMatchingQuotes(searchString);
+		checkForMatchingQuotes(searchString);
 		}
-		}
+	}
+
+	private boolean notFoundSearchString()
+	{
+		return !foundValidSearchString;
 	}
 
 	private void readSearchStringFromCommandLine()
@@ -62,9 +63,13 @@ public class Searcher
 		searchString = console.readLine();
 	}
 
-	private boolean promptForSearchString()
+	private void checkForQuiting(String inString)
 	{
-		return promptUser && !foundValidSearchString;
+		if (inString.equals("Q") || inString.equals("q"))
+		{
+			System.exit(0);
+		}
+	
 	}
 
 	private void checkForMatchingQuotes(String inSearchString)
@@ -82,7 +87,7 @@ public class Searcher
 
 	private void promptUserForSearchMethod()
 	{
-		while (notGivenSearchMethodAndNotQuit())
+		while (notFoundValidSearchMethod())
 		{
 			printSelectStrategyInstructions();
 			setStrategyTypeFromUserInput();
@@ -90,9 +95,9 @@ public class Searcher
 
 	}
 
-	private boolean notGivenSearchMethodAndNotQuit()
+	private boolean notFoundValidSearchMethod()
 	{
-		return promptUser && !foundValidSearchMethod;
+		return !foundValidSearchMethod;
 	}
 
 	private void printSelectStrategyInstructions()
@@ -114,7 +119,7 @@ public class Searcher
 	private void setStrategyIfValidStrategyFound(String searchMethod)
 	{
 		SearchStrategy userSearchStrategy = ParseInput.parseStrategyType(searchMethod);
-		if( userSearchStrategy.getClass().equals(NotAStrategy.class)) {
+		if( foundValidSearchStrategy(userSearchStrategy)) {
 			System.out.println("Invalid choice of search strategy");
 		}
 		else{
@@ -123,13 +128,10 @@ public class Searcher
 		}
 	}
 
-	private void checkForQuiting(String inString)
+	private boolean foundValidSearchStrategy(SearchStrategy userSearchStrategy)
 	{
-		if (inString.equals("Q") || inString.equals("q"))
-		{
-			System.exit(0);
-		}
-
+		Class foundSearchStrategyClass = userSearchStrategy.getClass();
+		return foundSearchStrategyClass.equals(NotAStrategy.class);
 	}
 
 	private static void printResults()
