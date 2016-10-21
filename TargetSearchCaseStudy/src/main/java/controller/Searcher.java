@@ -1,9 +1,13 @@
 package controller;
 
 import java.io.Console;
+import java.io.File;
+import java.util.List;
+
 
 import model.NotAStrategy;
 import model.SearchStrategy;
+import utils.BriansFileUtils;
 import utils.ParseInput;
 
 public class Searcher
@@ -11,17 +15,24 @@ public class Searcher
 	private String searchString;
 	private SearchStrategy strategy;
 	boolean promptUser;
+	private boolean foundValidSearchString;
+	private boolean foundValidSearchMethod;
 
 	public static void main(String[] args)
 	{
 		Searcher searcher = new Searcher();
+		while (searcher.promptUser)
+		{
 		searcher.getUserInput();
 		searcher.processUserInput();
 		printResults();
+		}
 	}
 
 	private Searcher()
 	{
+		foundValidSearchString = false;
+		foundValidSearchMethod = false;
 		promptUser = true;
 		searchString = "";
 		strategy = new NotAStrategy();
@@ -29,29 +40,59 @@ public class Searcher
 
 	private void getUserInput()
 	{
-		while (promptUser)
-		{
-			this.promptUserForSearchString();
-			this.promptUserForSearchMethod();
-		}
+		this.promptUserForSearchString();
+		this.promptUserForSearchMethod();
 	}
 
 	private void promptUserForSearchString()
 	{
-		System.out.println("Enter string to search for, enclose in \"'s.  Enter Q\\q to quit.");
+		while(promptForSearchString()){
+		System.out.println("Enter string to search for, enclose in \"'s.  Enter Q\\q with no quotes to quit.");
+		readSearchStringFromCommandLine();
+		checkForQuiting(searchString);
+		if ( promptUser){
+			checkForMatchingQuotes(searchString);
+		}
+		}
+	}
+
+	private void readSearchStringFromCommandLine()
+	{
 		Console console = System.console();
 		searchString = console.readLine();
-		checkForQuiting(searchString);
+	}
+
+	private boolean promptForSearchString()
+	{
+		return promptUser && !foundValidSearchString;
+	}
+
+	private void checkForMatchingQuotes(String inSearchString)
+	{
+		if ( inSearchString.startsWith("\"") && inSearchString.endsWith("\"") ){
+			inSearchString = inSearchString.substring(1, inSearchString.length() - 1);
+			foundValidSearchString = true;
+		}
+		else{
+			System.out.println("Search string must being and end with \"");
+			foundValidSearchString = false;
+		}
+		
 	}
 
 	private void promptUserForSearchMethod()
 	{
-		if (promptUser)
+		while (notGivenSearchMethodAndNotQuit())
 		{
 			printSelectStrategyInstructions();
 			setStrategyTypeFromUserInput();
 		}
 
+	}
+
+	private boolean notGivenSearchMethodAndNotQuit()
+	{
+		return promptUser && !foundValidSearchMethod;
 	}
 
 	private void printSelectStrategyInstructions()
@@ -67,23 +108,37 @@ public class Searcher
 		Console console = System.console();
 		String searchMethod = console.readLine();
 		checkForQuiting(searchMethod);
-		strategy = ParseInput.parseStrategyType(searchMethod);
+		setStrategyIfValidStrategyFound(searchMethod);
 	}
 
-	private void checkForQuiting(String searchMethod)
+	private void setStrategyIfValidStrategyFound(String searchMethod)
 	{
-		if (searchMethod.equals("Q") || searchMethod.equals("q"))
+		SearchStrategy userSearchStrategy = ParseInput.parseStrategyType(searchMethod);
+		if( userSearchStrategy.getClass().equals(NotAStrategy.class)) {
+			System.out.println("Invalid choice of search strategy");
+		}
+		else{
+			strategy = userSearchStrategy;
+			foundValidSearchMethod = true;
+		}
+	}
+
+	private void checkForQuiting(String inString)
+	{
+		if (inString.equals("Q") || inString.equals("q"))
 		{
-			promptUser = false;
+			System.exit(0);
 		}
 
 	}
 
 	private static void printResults()
 	{
-		// TODO Auto-generated method stub
+		List<File> listOfFiles = BriansFileUtils.getListOfTestFiles();
 
 	}
+
+	
 
 	private void processUserInput()
 	{
