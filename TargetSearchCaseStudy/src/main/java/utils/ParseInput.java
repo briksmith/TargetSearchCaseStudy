@@ -40,4 +40,27 @@ public class ParseInput
 		
 		return new NotAStrategy();
 	}
+	
+	public static String stripBeginingAndEndQuotes(String inString){
+		inString = removeLeadingQuote(inString);
+		inString = removeTrailingQuote(inString);
+		return inString;
+	}
+
+	private static String removeLeadingQuote(String inString)
+	{
+		if(inString.charAt(0) == '\"'){
+			inString = inString.substring(1);
+		}
+		return inString;
+	}
+
+	private static String removeTrailingQuote(String inString)
+	{
+		int inStringLength = inString.length();
+		if (inString.charAt(inStringLength-1) == '\"'){
+			inString = inString.substring(0, inStringLength  - 1);
+		}
+		return inString;
+	}
 }

@@ -50,6 +50,7 @@ public class Searcher
 			readSearchStringFromCommandLine();
 			checkForQuiting(searchString);
 			checkForMatchingQuotes(searchString);
+			searchString = ParseInput.stripBeginingAndEndQuotes(searchString);
 		}
 	}
 
@@ -148,6 +149,13 @@ public class Searcher
 			System.out.println("String " + this.searchString + " found " + timesSearchStringFound + " times in file "
 					+ fileToSearch.getName());
 		}
+		resetSearch();
+	}
+
+	private void resetSearch()
+	{
+		this.foundValidSearchString = false;
+		this.foundValidSearchMethod = false;
 	}
 
 	private void processUserInput()

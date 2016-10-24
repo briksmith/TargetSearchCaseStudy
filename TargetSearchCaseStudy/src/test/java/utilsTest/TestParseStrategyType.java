@@ -42,4 +42,25 @@ public class TestParseStrategyType
 				expected.equals(result.getClass()));
 	}
 	
+	private static final Object[] inputsForStripQuotes() {
+		return new Object[] {
+				new Object[] { "test", "test"},
+				new Object[] { "\"test\"", "test"},
+				new Object[] { "\"test", "test"},
+				new Object[] { "test\"", "test"},
+				new Object[] {"\"\"test\"\"\"", "\"test\"\""},
+				new Object[] {"test\"test", "test\"test"}
+		};
+	}
+	
+	
+	@Test
+	@Parameters(method="inputsForStripQuotes")
+	public void testStripQuotes(String input, String expected){
+		
+		
+		input = ParseInput.stripBeginingAndEndQuotes(input);
+		assertTrue("Expected: " + expected +  " Was: " + input, expected.equals(input));
+	}
+	
 }

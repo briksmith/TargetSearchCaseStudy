@@ -49,6 +49,12 @@ public class StringSearch implements SearchStrategy
 		return timesFoundInFile;
 	}
 
+	private void handleException(IOException e)
+	{
+		System.out.println(e.getMessage());
+		e.printStackTrace();
+	}
+
 	private boolean invalidFile(File inFile)
 	{
 		if ( inFile == null){
@@ -61,12 +67,6 @@ public class StringSearch implements SearchStrategy
 			return true;
 		}
 		return false;
-	}
-
-	private void handleException(IOException e)
-	{
-		System.out.println(e.getMessage());
-		e.printStackTrace();
 	}
 
 }
