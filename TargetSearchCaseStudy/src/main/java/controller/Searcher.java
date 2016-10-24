@@ -4,7 +4,6 @@ import java.io.Console;
 import java.io.File;
 import java.util.List;
 
-
 import model.NotAStrategy;
 import model.SearchStrategy;
 import utils.BriansFileUtils;
@@ -22,9 +21,9 @@ public class Searcher
 		Searcher searcher = new Searcher();
 		while (true)
 		{
-		searcher.getUserInput();
-		searcher.processUserInput();
-		printResults();
+			searcher.getUserInput();
+			searcher.processUserInput();
+			searcher.printResults();
 		}
 	}
 
@@ -44,11 +43,13 @@ public class Searcher
 
 	private void promptUserForSearchString()
 	{
-		while(notFoundSearchString()){
-		System.out.println("Enter string to search for, enclose in \"'s.  Enter Q\\q with no quotes to quit.");
-		readSearchStringFromCommandLine();
-		checkForQuiting(searchString);
-		checkForMatchingQuotes(searchString);
+		while (notFoundSearchString())
+		{
+			System.out.println("Enter string to search for, enclose in \"'s.  Enter Q\\q with no quotes to quit.");
+			System.out.println("Note: searches ARE case sensitive");
+			readSearchStringFromCommandLine();
+			checkForQuiting(searchString);
+			checkForMatchingQuotes(searchString);
 		}
 	}
 
@@ -69,20 +70,22 @@ public class Searcher
 		{
 			System.exit(0);
 		}
-	
+
 	}
 
 	private void checkForMatchingQuotes(String inSearchString)
 	{
-		if ( inSearchString.startsWith("\"") && inSearchString.endsWith("\"") ){
+		if (inSearchString.startsWith("\"") && inSearchString.endsWith("\""))
+		{
 			inSearchString = inSearchString.substring(1, inSearchString.length() - 1);
 			foundValidSearchString = true;
 		}
-		else{
+		else
+		{
 			System.out.println("Search string must being and end with \"");
 			foundValidSearchString = false;
 		}
-		
+
 	}
 
 	private void promptUserForSearchMethod()
@@ -119,10 +122,12 @@ public class Searcher
 	private void setStrategyIfValidStrategyFound(String searchMethod)
 	{
 		SearchStrategy userSearchStrategy = ParseInput.parseStrategyType(searchMethod);
-		if( foundValidSearchStrategy(userSearchStrategy)) {
+		if (foundValidSearchStrategy(userSearchStrategy))
+		{
 			System.out.println("Invalid choice of search strategy");
 		}
-		else{
+		else
+		{
 			strategy = userSearchStrategy;
 			foundValidSearchMethod = true;
 		}
@@ -134,13 +139,16 @@ public class Searcher
 		return foundSearchStrategyClass.equals(NotAStrategy.class);
 	}
 
-	private static void printResults()
+	private void printResults()
 	{
-		List<File> listOfFiles = BriansFileUtils.getListOfTestFiles();
-
+		List<File> filesToSearch = BriansFileUtils.getListOfTestFiles();
+		for (File fileToSearch : filesToSearch)
+		{
+			int timesSearchStringFound = this.strategy.timesSearchStringFound(this.searchString, fileToSearch);
+			System.out.println("String " + this.searchString + " found " + timesSearchStringFound + " times in file "
+					+ fileToSearch.getName());
+		}
 	}
-
-	
 
 	private void processUserInput()
 	{
