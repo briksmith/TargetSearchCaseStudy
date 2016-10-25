@@ -31,8 +31,10 @@ public class SearchTest
 		return new Object[] { 
 				new Object[] { "", null, new StringSearch() },
 				new Object[] { "", new File("C:\\"), new StringSearch() },
-				new Object[] { "", new File("alkshfihnoqadn"), new StringSearch(),
-				}
+				new Object[] { "", new File("alkshfihnoqadn"), new StringSearch()},
+				new Object[] { "", null, new RegularExpressionSearch() },
+				new Object[] { "", new File("C:\\"), new RegularExpressionSearch() },
+				new Object[] { "", new File("alkshfihnoqadn"), new RegularExpressionSearch()} 
 		};
 	}
 
@@ -54,7 +56,13 @@ public class SearchTest
 				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new StringSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
-						new StringSearch() } };
+						new StringSearch() },
+				new Object[] { "again", 4, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+						new RegularExpressionSearch() },
+				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+						new RegularExpressionSearch() },
+				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+						new RegularExpressionSearch() }};
 	}
 
 	@Test

@@ -50,7 +50,7 @@ public class StringSearch implements SearchStrategy
 		return timesFoundInFile;
 	}
 
-	private void handleException(IOException e)
+	private void handleException(Exception e)
 	{
 		System.out.println(e.getMessage());
 		e.printStackTrace();

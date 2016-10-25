@@ -7,6 +7,7 @@ public class Consts
 	public static final String FRENCH_ARMED_FORCES = "french_armed_forces.txt";
 	public static final String HITCHHIKERS = "hitchhikers.txt";
 	public static final String WARP_DRIVE = "warp_drive.txt";
+	public static final String FILE_READ_ERROR ="WARNING!!!!STRING NOT READdd!FROM FILE!!!!!8753974953!@$)^^";
 	public static enum StrategyEnum
 	{
 		NotAStrategy(-1), StringSearchStrategy(1), RegularExpressionSearchStrategy(2), PreProcessSearchStrategy(3);

@@ -8,6 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 
 public class BriansFileUtils
 {
+	
 	public static List<File> getListOfTestFiles()
 	{
 		File testFilesDirectory = new File(Consts.TEST_FILES_LOCATION);
@@ -41,5 +42,11 @@ public class BriansFileUtils
 			return true;
 		}
 		return false;
+	}
+	
+	public static void handleException(Exception e)
+	{
+		System.out.println(e.getMessage());
+		e.printStackTrace();
 	}
 }
