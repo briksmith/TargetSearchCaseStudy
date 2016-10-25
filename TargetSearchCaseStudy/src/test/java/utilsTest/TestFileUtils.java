@@ -8,10 +8,14 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import utils.BriansFileUtils;
 import utils.Consts;
 
+@RunWith(JUnitParamsRunner.class)
 public class TestFileUtils
 {
 
@@ -40,4 +44,22 @@ public class TestFileUtils
 					actual.contains(expectedFile));
 		}
 	}
+
+	public Object[] getErrorConditions()
+	{
+		return new Object[] { new Object[] { true, null }, 
+				new Object[] { true, new File("C:\\") },
+				new Object[] { true, new File("alkshfihnoqadn")},
+				new Object[] { false, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES) } };
+	}
+
+	@Test
+	@Parameters(method = "getErrorConditions")
+	public void checkErrorConditions(boolean expected, File inFile)
+	{
+		boolean isValidFile = BriansFileUtils.invalidFile(inFile);
+		assertTrue("This conditions should have returned " + expected + " and returned " + isValidFile + " instead",
+				expected == isValidFile);
+	}
+
 }

@@ -28,4 +28,18 @@ public class BriansFileUtils
 			listOfFiles.add(testFile);
 		}
 	}
+	
+	public static boolean invalidFile(File inFile)
+	{
+		if ( inFile == null){
+			return true;
+		}
+		if ( !inFile.exists()){
+			return true;
+		}
+		if ( inFile.isDirectory()){
+			return true;
+		}
+		return false;
+	}
 }
