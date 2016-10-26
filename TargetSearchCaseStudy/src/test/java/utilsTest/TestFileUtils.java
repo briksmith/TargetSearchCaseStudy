@@ -47,9 +47,8 @@ public class TestFileUtils
 
 	public Object[] getErrorConditions()
 	{
-		return new Object[] { new Object[] { true, null }, 
-				new Object[] { true, new File("C:\\") },
-				new Object[] { true, new File("alkshfihnoqadn")},
+		return new Object[] { new Object[] { true, null }, new Object[] { true, new File("C:\\") },
+				new Object[] { true, new File("alkshfihnoqadn") },
 				new Object[] { false, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES) } };
 	}
 
@@ -60,6 +59,13 @@ public class TestFileUtils
 		boolean isValidFile = BriansFileUtils.invalidFile(inFile);
 		assertTrue("This conditions should have returned " + expected + " and returned " + isValidFile + " instead",
 				expected == isValidFile);
+	}
+
+	@Test
+	public void printHash()
+	{
+		String s = "test";
+		System.out.println(s.hashCode());
 	}
 
 }
