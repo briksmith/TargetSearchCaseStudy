@@ -1,7 +1,7 @@
 package utils;
 
 import model.NotAStrategy;
-import model.PreprocessAndIndexSearch;
+import model.KnuthMorrisPrattSearch;
 import model.RegularExpressionSearch;
 import model.SearchStrategy;
 import model.StringSearch;
@@ -35,7 +35,7 @@ public class ParseInput
 		} else if ( strategy == StrategyEnum.RegularExpressionSearchStrategy.getIndex()){
 			return new RegularExpressionSearch();
 		} else if ( strategy == StrategyEnum.PreProcessSearchStrategy.getIndex()){
-			return new PreprocessAndIndexSearch();
+			return new KnuthMorrisPrattSearch();
 		}
 		
 		return new NotAStrategy();

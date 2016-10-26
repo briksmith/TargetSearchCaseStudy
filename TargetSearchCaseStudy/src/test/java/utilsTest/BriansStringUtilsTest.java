@@ -16,9 +16,12 @@ public class BriansStringUtilsTest
 
 	private final String pattern =  "ABC ABEPAT PATRICA";
 	private int[] expectedValues = {-1,0,0,0,0,1,2,0,0,1,0,0,0,1,0,0,0,0};
+	private final String patternABCDABD = "ABCDABD";
+	private int[] expectedValuesABCDABD = { -1,0,0,0,0,1,2};
 	private Object[] stringsToSearch()
 	{
-		return new Object[] {new Object[]  { pattern, expectedValues }};
+		return new Object[] {new Object[]  { pattern, expectedValues },
+				new Object[] { patternABCDABD, expectedValuesABCDABD} };
 	}
 
 	@Test

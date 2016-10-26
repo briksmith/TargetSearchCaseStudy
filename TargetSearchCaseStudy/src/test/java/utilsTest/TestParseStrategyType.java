@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import model.NotAStrategy;
-import model.PreprocessAndIndexSearch;
+import model.KnuthMorrisPrattSearch;
 import model.RegularExpressionSearch;
 import model.SearchStrategy;
 import model.StringSearch;
@@ -27,7 +27,7 @@ public class TestParseStrategyType
 			 new Object[]{"dsfgrt", NotAStrategy.class},
 			 new Object[]{"1", StringSearch.class},
 			 new Object[]{"2", RegularExpressionSearch.class},
-			 new Object[]{"3", PreprocessAndIndexSearch.class},
+			 new Object[]{"3", KnuthMorrisPrattSearch.class},
 			 new Object[]{"4", NotAStrategy.class},
 			 new Object[]{"5", NotAStrategy.class}
 		};

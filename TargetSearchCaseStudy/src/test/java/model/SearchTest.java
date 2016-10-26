@@ -62,7 +62,15 @@ public class SearchTest
 				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new RegularExpressionSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
-						new RegularExpressionSearch() }};
+						new RegularExpressionSearch() },
+				new Object[] { "again", 4, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+						new KnuthMorrisPrattSearch() },
+				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+						new KnuthMorrisPrattSearch() },
+				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+						new KnuthMorrisPrattSearch() }		
+		
+		};
 	}
 
 	@Test
