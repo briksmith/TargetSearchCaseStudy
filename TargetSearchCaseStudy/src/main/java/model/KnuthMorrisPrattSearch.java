@@ -13,12 +13,21 @@ public class KnuthMorrisPrattSearch implements SearchStrategy
 {
 	private FileLineGetter fileLineGetter;
 	private List<Integer> suffixTable;
-	private int stringToFindIndex = 0;
-	private int stringToSearchIndex = 0;
+	private int stringToFindIndex;
+	private int stringToSearchIndex;
+	private int timesFoundInFile;
 	
 	public KnuthMorrisPrattSearch(){
 		fileLineGetter = new FileLineGetter();
+		initMembers();
+	}
+
+	private void initMembers()
+	{
 		suffixTable = new ArrayList<>();
+		stringToFindIndex = 0;
+		stringToSearchIndex = 0;
+		timesFoundInFile = 0;
 	}
 	
 	public int timesSearchStringFound(String inStringToFind, File inFile)
@@ -27,35 +36,42 @@ public class KnuthMorrisPrattSearch implements SearchStrategy
 			return Consts.SEARCH_ERROR;
 		}
 		
+		initMembers();
 		suffixTable = BriansStringUtils.populatePartialMatchTable(inStringToFind);
 		
-		int timesFoundInFile = 0;
-		
 		String stringToSearch = fileLineGetter.getLine(inFile);
-		stringToFindIndex = 0;
-		stringToSearchIndex = 0;
+		resetIndecies();
 		while ( stringToSearch != null){
-			while ( stringToSearchIndex + stringToFindIndex < stringToSearch.length()){
-				if ( inStringToFind.charAt(stringToFindIndex) == stringToSearch.charAt(stringToFindIndex + stringToSearchIndex) ) {
-					if ( stringToFindIndex == inStringToFind.length() - 1){
-						timesFoundInFile++;
-						incrementIndices();
-					}else{
-						stringToFindIndex++;
-					}
-				}
-				else{
-					incrementIndices();
-				}
-				
-			}
+			findOccurencesInString(inStringToFind, stringToSearch);
 			stringToSearch = fileLineGetter.getLine(inFile);
-			stringToFindIndex = 0;
-			stringToSearchIndex = 0;
+			resetIndecies();
 		}
 		
-		
 		return timesFoundInFile;
+	}
+
+	private void findOccurencesInString(String inStringToFind, String stringToSearch)
+	{
+		while ( stringToSearchIndex + stringToFindIndex < stringToSearch.length()){
+			if ( inStringToFind.charAt(stringToFindIndex) == stringToSearch.charAt(stringToFindIndex + stringToSearchIndex) ) {
+				if ( stringToFindIndex == inStringToFind.length() - 1){
+					timesFoundInFile++;
+					incrementIndices();
+				}else{
+					stringToFindIndex++;
+				}
+			}
+			else{
+				incrementIndices();
+			}
+			
+		}
+	}
+
+	private void resetIndecies()
+	{
+		stringToFindIndex = 0;
+		stringToSearchIndex = 0;
 	}
 
 	private void incrementIndices()
