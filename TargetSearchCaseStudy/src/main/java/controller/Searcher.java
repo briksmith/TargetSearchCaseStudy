@@ -145,6 +145,7 @@ public class Searcher
 		List<File> filesToSearch = BriansFileUtils.getListOfTestFiles();
 		for (File fileToSearch : filesToSearch)
 		{
+			System.out.println("filesearching: " + fileToSearch.getName());
 			int timesSearchStringFound = this.strategy.timesSearchStringFound(this.searchString, fileToSearch);
 			System.out.println("String " + this.searchString + " found " + timesSearchStringFound + " times in file "
 					+ fileToSearch.getName());

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 
 public class FileLineGetter
 {
@@ -19,33 +18,26 @@ public class FileLineGetter
 
 	public String getLine(File inFile)
 	{
-		initMembers(inFile);
 		if ( bufferedReader != null ) {
 			try
 			{
 				return bufferedReader.readLine();
 			}
-			catch (IOException e)
+			catch (Exception e)
 			{
 				BriansFileUtils.handleException(e);
 				return Consts.FILE_READ_ERROR;
 			}
 		}
-		return "";
+		return Consts.FILE_READ_ERROR;
 	}
 
-	private void initMembers(File inFile)
+	public void initMembers(File inFile)
 	{
 		try
 		{
-			if (fileReader == null)
-			{
-				fileReader = new FileReader(inFile);
-			}
-			if (bufferedReader == null)
-			{
-				bufferedReader = new BufferedReader(fileReader);
-			}	
+			fileReader = new FileReader(inFile);
+			bufferedReader = new BufferedReader(fileReader);
 		}
 		catch (FileNotFoundException e)
 		{

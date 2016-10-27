@@ -24,9 +24,9 @@ public class RegularExpressionSearch implements SearchStrategy
 		}
 		int timesFoundInFile = 0;
 		Pattern searchPattern = Pattern.compile(inSearchString);
-		
+		fileLineGetter.initMembers(inFile);
 		String stringToSearch = fileLineGetter.getLine(inFile);
-		while ( stringToSearch != null){
+		while ( continueSearch(stringToSearch)){
 			Matcher matcher = searchPattern.matcher(stringToSearch);
 			stringToSearch = fileLineGetter.getLine(inFile);
 			while (matcher.find()){

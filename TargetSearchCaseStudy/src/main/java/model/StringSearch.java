@@ -3,9 +3,9 @@ package model;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import utils.BriansFileUtils;
 import utils.Consts;
@@ -13,6 +13,8 @@ import utils.Consts;
 public class StringSearch implements SearchStrategy
 {
 
+	static Logger log = Logger.getLogger(StringSearch.class.getName());
+	
 	public int timesSearchStringFound(String inSearchString, File inFile) 
 	{
 		if ( BriansFileUtils.invalidFile(inFile)){
@@ -26,13 +28,13 @@ public class StringSearch implements SearchStrategy
 		bufferedReader = new BufferedReader(reader);
 		String readString = bufferedReader.readLine();
 		
-		while (readString != null ){
+		while (continueSearch(readString) ){
 			int timesFoundInSubstring = StringUtils.countMatches(readString, inSearchString);
 			timesFoundInFile += timesFoundInSubstring;
 			readString = bufferedReader.readLine();
 		}
 		}
-		catch(IOException e){
+		catch(Exception e){
 			handleException(e);
 		}
 		finally{
@@ -41,7 +43,7 @@ public class StringSearch implements SearchStrategy
 				bufferedReader.close();
 				reader.close();
 			}
-			catch (IOException e)
+			catch (Exception e)
 			{
 				handleException(e);
 			}

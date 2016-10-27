@@ -34,7 +34,15 @@ public class SearchTest
 				new Object[] { "", new File("alkshfihnoqadn"), new StringSearch()},
 				new Object[] { "", null, new RegularExpressionSearch() },
 				new Object[] { "", new File("C:\\"), new RegularExpressionSearch() },
-				new Object[] { "", new File("alkshfihnoqadn"), new RegularExpressionSearch()} 
+				new Object[] { "", new File("alkshfihnoqadn"), new RegularExpressionSearch() },
+				new Object[] { "", null, new KnuthMorrisPrattSearch() },
+				new Object[] { "", new File("C:\\"), new KnuthMorrisPrattSearch() },
+				new Object[] { "", new File("alkshfihnoqadn"), new KnuthMorrisPrattSearch() },
+				new Object[] { "", null, new ProcessAndIndexSearch() },
+				new Object[] { "", new File("C:\\"), new ProcessAndIndexSearch() },
+				new Object[] { "", new File("alkshfihnoqadn"), new ProcessAndIndexSearch()		
+				}		
+				
 		};
 	}
 
@@ -57,18 +65,24 @@ public class SearchTest
 						new StringSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new StringSearch() },
+				new Object[] { "radio", 2, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
+						new StringSearch() },
 				new Object[] { "again", 4, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new RegularExpressionSearch() },
 				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new RegularExpressionSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new RegularExpressionSearch() },
+				new Object[] { "radio", 2, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
+						new RegularExpressionSearch() },
 				new Object[] { "again", 4, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new KnuthMorrisPrattSearch() },
 				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new KnuthMorrisPrattSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
-						new KnuthMorrisPrattSearch() }		
+						new KnuthMorrisPrattSearch()},
+						new Object[] { "radio", 2, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
+								new KnuthMorrisPrattSearch() }
 		
 		};
 	}

@@ -39,9 +39,10 @@ public class KnuthMorrisPrattSearch implements SearchStrategy
 		initMembers();
 		suffixTable = BriansStringUtils.populatePartialMatchTable(inStringToFind);
 		
+		fileLineGetter.initMembers(inFile);
 		String stringToSearch = fileLineGetter.getLine(inFile);
 		resetIndecies();
-		while ( stringToSearch != null){
+		while ( continueSearch(stringToSearch) ){
 			findOccurencesInString(inStringToFind, stringToSearch);
 			stringToSearch = fileLineGetter.getLine(inFile);
 			resetIndecies();
