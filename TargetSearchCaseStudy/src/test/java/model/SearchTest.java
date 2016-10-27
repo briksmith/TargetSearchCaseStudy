@@ -16,6 +16,12 @@ import utils.Consts;
 public class SearchTest
 {
 
+	private static final int TIMES_TO_FIND_RADIO_HITCHHIKERS = 2;
+
+	private static final int TIMES_TO_FIND_AGAINST_FRENCH = 3;
+
+	private static final int TIMES_TO_FIND_AGAIN_FRENCH = 4;
+
 	SearchStrategy systemUnderTest;
 
 	File french;
@@ -59,13 +65,13 @@ public class SearchTest
 	public Object[] testSearchStrings()
 	{
 		return new Object[] {
-				new Object[] { "again", 4, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+				new Object[] { "again", TIMES_TO_FIND_AGAIN_FRENCH, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new StringSearch() },
-				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+				new Object[] { "against", TIMES_TO_FIND_AGAINST_FRENCH, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new StringSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new StringSearch() },
-				new Object[] { "radio", 2, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
+				new Object[] { "radio", TIMES_TO_FIND_RADIO_HITCHHIKERS, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
 						new StringSearch() },
 				new Object[] { "again", 4, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new RegularExpressionSearch() },
@@ -73,15 +79,15 @@ public class SearchTest
 						new RegularExpressionSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new RegularExpressionSearch() },
-				new Object[] { "radio", 2, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
+				new Object[] { "radio", TIMES_TO_FIND_RADIO_HITCHHIKERS, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
 						new RegularExpressionSearch() },
-				new Object[] { "again", 4, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+				new Object[] { "again", TIMES_TO_FIND_AGAIN_FRENCH, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new KnuthMorrisPrattSearch() },
-				new Object[] { "against", 3, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
+				new Object[] { "against", TIMES_TO_FIND_AGAINST_FRENCH, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new KnuthMorrisPrattSearch() },
 				new Object[] { "sdfd", 0, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES),
 						new KnuthMorrisPrattSearch()},
-						new Object[] { "radio", 2, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
+						new Object[] { "radio", TIMES_TO_FIND_RADIO_HITCHHIKERS, new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.HITCHHIKERS),
 								new KnuthMorrisPrattSearch() }
 		
 		};
