@@ -3,7 +3,9 @@ package model;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +23,10 @@ public class SearchTest
 	private static final int TIMES_TO_FIND_AGAINST_FRENCH = 3;
 
 	private static final int TIMES_TO_FIND_AGAIN_FRENCH = 4;
+
+	private static final int numTimeTest = 250000;
+	
+	private static Logger log = Logger.getLogger(SearchTest.class);
 
 	SearchStrategy systemUnderTest;
 
@@ -103,4 +109,46 @@ public class SearchTest
 		assertTrue("Should have found them " + expected + " times.  Found " + timesFound + " times.",
 				timesFound == expected);
 	}
+	
+	private Object[] randomSearchTerms(){
+		return new Object[] {
+				new Object[] { "Roman", new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES)},
+				new Object[] { "ion", new File(Consts.TEST_FILES_LOCATION + "\\" + Consts.FRENCH_ARMED_FORCES)}
+		};
+	}
+	
+	
+	@Test
+	@Parameters(method ="randomSearchTerms")
+	public void timeMethods(String inSearchTerm, File fileToSearch)
+	{
+		SearchStrategy stringSearch = new StringSearch();
+		SearchStrategy regularExpressionSearch = new RegularExpressionSearch();
+		SearchStrategy knuthMorrisPrattSearch = new KnuthMorrisPrattSearch();
+		int stringFound = 0;
+		int regularExpressionFound = 0;
+		int knuthMorrisFound = 0;
+		
+		stringFound = searchStringWithStrategy(inSearchTerm, fileToSearch, stringSearch);
+		regularExpressionFound = searchStringWithStrategy(inSearchTerm, fileToSearch, regularExpressionSearch);
+		knuthMorrisFound = searchStringWithStrategy(inSearchTerm, fileToSearch, knuthMorrisPrattSearch);
+		
+		assertTrue("stringSearch found: " + stringFound + " regular expression found: " + regularExpressionFound, stringFound == regularExpressionFound);
+		assertTrue("stringSearch found: " + stringFound + " knuthMorris found: " + knuthMorrisFound, stringFound == knuthMorrisFound);
+		assertTrue("regular expression found: " + regularExpressionFound + " knuthMorris found: " + knuthMorrisFound, regularExpressionFound == knuthMorrisFound);
+	}
+
+	private int searchStringWithStrategy(String inSearchTerm, File fileToSearch, SearchStrategy inStrategy)
+	{
+		int timesFound = 0;
+		long timeBefore =new Date().getTime();
+		for ( int i = 0; i < numTimeTest; i++){
+			timesFound = inStrategy.timesSearchStringFound(inSearchTerm, fileToSearch);
+		}
+		long timeAfter = new Date().getTime();
+		long millis = timeAfter - timeBefore;
+		System.out.println(inStrategy.getClass().getName() + " took " + millis + " milliseconds");
+		return timesFound;
+	}
+	
 }
